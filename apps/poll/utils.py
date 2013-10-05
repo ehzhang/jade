@@ -7,7 +7,6 @@ class Card(object):
     text = None
     submitter = None
     votes = None
-    comments = None
 
     def __init__(self, option_id):
         self.option_id = option_id
@@ -16,6 +15,25 @@ class Card(object):
         self.text = option.text
         self.submitter = option.submitter
         self.votes = option.votes()
+
+
+class CardFront(Card):
+    comment_count = None
+
+    def __init__(self, option_id):
+        super(CardFront, self).__init__(option_id)
+        option = Option.objects.get(id=option_id)
+
+        self.comment_count = len(Comments.objects.filter(option=option))
+
+
+class CardBack(Card):
+    comments = None
+
+    def __init__(self, option_id):
+        super(CardFront, self).__init__(option_id)
+        option = Option.objects.get(id=option_id)
+
         self.comments = [
             DisplayComment(comment) for comment in
             Comment.objects.filter(option=option)
