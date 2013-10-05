@@ -1,0 +1,15 @@
+<div class='ui items'>
+    <div class='item front-card'>
+        <div class='meta'>
+            {{ card.votes }} votes
+        </div>
+        <div class='name'><h2>{{ card.text | truncatechars:50}}</h2></div>
+        <p class='description'>
+            -- {{ card.submitter | truncatechars:50 }}
+        </p>
+        <div class='extra'>
+            {{ card.comments | length }} comments
+        </div>
+    </div>
+</div>
+

@@ -10,7 +10,7 @@ body {
 	background: white;
 	background:url("../images/noisy.png") repeat;
 	font-weight: 300;
-	}
+}
 
 .logo,
 .logo-navbar,
@@ -49,4 +49,8 @@ body {
 .navbar {
 	background: #1D7373;
 	color: white;
+}
+
+.ui.items > .front-card{
+    min-height: 150px;
 }
