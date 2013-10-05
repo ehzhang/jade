@@ -53,8 +53,23 @@ class Option(models.Model):
     def __unicode__(self):
         return u'%s' % (self.text, )
 
+    def votes(self):
+        return self.upvotes - self.downvotes
+
     def upvote(self):
         self.upvotes += 1
+        self.save()
+
+    def undo_upvote(self):
+        self.upvotes -= 1
+        self.save()
+
+    def downvote(self):
+        self.downvotes += 1
+        self.save()
+
+    def undo_downvote(self):
+        self.downvotes -= 1
         self.save()
 
 
@@ -80,6 +95,9 @@ class Comment(models.Model):
         _('comment text'),
     )
 
+    def votes(self):
+        return self.upvotes - self.downvotes
+
     upvotes = models.IntegerField(
         _('number of upvotes'),
     )
@@ -90,4 +108,20 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.text, )
+
+    def upvote(self):
+        self.upvotes += 1
+        self.save()
+
+    def undo_upvote(self):
+        self.upvotes -= 1
+        self.save()
+
+    def downvote(self):
+        self.downvotes += 1
+        self.save()
+
+    def undo_downvote(self):
+        self.downvotes -= 1
+        self.save()
 
