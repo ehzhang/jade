@@ -97,78 +97,102 @@ def create_comment(request):
     return JSONResponse(data)
 
 
-def option_upvote(request, option_id):
+def option_upvote(request):
+    option_id = get_post_request_attr(request, 'option_id')
     option = Option.objects.get(id=option_id)
     votes = request.session.get('option_votes', {})
-    allowed = not (option_id in votes and votes[option_id] > 0)
-    if allowed:
+
+    if option_id not in votes:
         option.upvote()
-
-    if option_id in votes:
-        # change vote
-        votes[option_id] += 1
-        option.undo_downvote()
-    else:
         votes[option_id] = 1
+    elif votes[option_id] == -1:
+        option.undo_downvote()
+        option.upvote()
+        votes[option_id] = 1
+    elif votes[option_id] == 0:
+        option.upvote()
+        votes[option_id] = 1
+    elif votes[option_id] == 1:
+        option.undo_upvote()
+        votes[option_id] = 0
 
+    request.session['option_votes'] = votes
     data = {
-        'result': 'success' if allowed else 'failure',
+        'result': 'success',
     }
     return JSONResponse(data)
 
-def option_downvote(request, option_id):
+def option_downvote(request):
+    option_id = get_post_request_attr(request, 'option_id')
     option = Option.objects.get(id=option_id)
     votes = request.session.get('option_votes', {})
-    allowed = not (option_id in votes and votes[option_id] < 0)
-    if allowed:
+
+    if option_id not in votes:
         option.downvote()
-
-    if option_id in votes:
-        # change vote
-        votes[option_id] -= 1
-        option.undo_upvote()
-    else:
         votes[option_id] = -1
+    elif votes[option_id] == 1:
+        option.undo_upvote()
+        option.downvote()
+        votes[option_id] = -1
+    elif votes[option_id] == 0:
+        option.downvote()
+        votes[option_id] = -1
+    elif votes[option_id] == -1:
+        option.undo_downvote()
+        votes[option_id] = 0
 
+    request.session['option_votes'] = votes
     data = {
-        'result': 'success' if allowed else 'failure',
+        'result': 'success',
     }
     return JSONResponse(data)
 
-def comment_upvote(request, comment_id):
-    comment = Comment.objects.get(id=comment)
+def comment_upvote(request):
+    comment_id = get_post_request_attr(request, 'comment_id')
+    comment = Comment.objects.get(id=comment_id)
     votes = request.session.get('comment_votes', {})
-    allowed = not (comment_id in votes and votes[comment_id] > 0)
-    if allowed:
+
+    if comment_id not in votes:
         comment.upvote()
-
-    if comment_id in votes:
-        # change vote
-        votes[comment_id] += 1
-        comment.undo_downvote()
-    else:
         votes[comment_id] = 1
+    elif votes[comment_id] == -1:
+        comment.undo_downvote()
+        comment.upvote()
+        votes[comment_id] = 1
+    elif votes[comment_id] == 0:
+        comment.upvote()
+        votes[comment_id] = 1
+    elif votes[comment_id] == 1:
+        comment.undo_upvote()
+        votes[comment_id] = 0
 
+    request.session['comment_votes'] = votes
     data = {
-        'result': 'success' if allowed else 'failure',
+        'result': 'success',
     }
     return JSONResponse(data)
 
-def comment_downvote(request, comment_id):
-    comment = Comment.objects.get(id=comment)
+def comment_downvote(request):
+    comment_id = get_post_request_attr(request, 'comment_id')
+    comment = Comment.objects.get(id=comment_id)
     votes = request.session.get('comment_votes', {})
-    allowed = not (comment_id in votes and votes[comment_id] < 0)
-    if allowed:
+
+    if comment_id not in votes:
         comment.downvote()
-
-    if comment_id in votes:
-        # change vote
-        votes[comment_id] -= 1
-        comment.undo_upvote()
-    else:
         votes[comment_id] = -1
+    elif votes[comment_id] == 1:
+        comment.undo_upvote()
+        comment.downvote()
+        votes[comment_id] = -1
+    elif votes[comment_id] == 0:
+        comment.downvote()
+        votes[comment_id] = -1
+    elif votes[comment_id] == -1:
+        comment.undo_downvote()
+        votes[comment_id] = 0
 
+    request.session['comment_votes'] = votes
     data = {
-        'result': 'success' if allowed else 'failure',
+        'result': 'success',
     }
     return JSONResponse(data)
