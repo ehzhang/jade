@@ -50,13 +50,15 @@ def create_poll(request):
     }
     return JSONResponse(data)
 
+
 def create_option(request):
     poll_id = get_post_request_attr(request, 'poll_id')
     submitter = get_post_request_attr(request, 'submitter')
     text = get_post_request_attr(request, 'text')
 
     poll = Poll.objects.get(id=poll_id)
-    public_id = Option.objects.count()  # race condition bug
+    # race condition bug below. fix later
+    public_id = Option.objects.filter(poll=poll).count()
 
     option = Option.objects.create(
         poll=poll,
@@ -65,8 +67,32 @@ def create_option(request):
         text=text,
     )
     option.save()
+
     data = {
         'result': 'success',
+    }
+    return JSONResponse(data)
+
+
+def create_comment(request):
+    option_id = get_post_request_attr(request, 'option_id')
+    submitter = get_post_request_attr(request, 'submitter')
+    text = get_post_request_attr(request, 'text')
+
+    option = Option.objects.get(id=option_id)
+    # race condition bug below. fix later
+    public_id = Comment.objects.filter(option=option).count()
+
+    comment = Comment.objects.create(
+        option=option,
+        public_id=public_id,
+        submitter=submitter,
+        text=text,
+    )
+    comment.save()
+
+    data = {
+        'result': 'success'
     }
     return JSONResponse(data)
 

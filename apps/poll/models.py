@@ -44,10 +44,12 @@ class Option(models.Model):
 
     upvotes = models.IntegerField(
         _('number of upvotes'),
+        default=0,
     )
 
     downvotes = models.IntegerField(
         _('number of downvotes'),
+        default=0,
     )
 
     def __unicode__(self):
@@ -100,10 +102,12 @@ class Comment(models.Model):
 
     upvotes = models.IntegerField(
         _('number of upvotes'),
+        default=0,
     )
 
     downvotes = models.IntegerField(
         _('number of downvotes'),
+        default=0,
     )
 
     def __unicode__(self):
