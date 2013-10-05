@@ -5,8 +5,7 @@
 
     {% load staticfiles %}
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-    <link href="http://fonts.googleapis.com/css?family=Rancho" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
     
     <link href="{% static 'css/semantic-0.2.4.min.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" class="ui" href="{% static "elements/button.css" %}">
@@ -62,29 +61,29 @@
     <script src="{% static "modules/transition.js" %}"></script>
 
     <link href="{% static 'css/jade.css' %}" rel="stylesheet" type="text/css">
-    <script src="{% static 'js/less-1.4.1.min.js' %}" type="text/javascript"></script>
 
     {% endblock %}
   </head>
   <body>
     {% block navbar %}      
-    <div class="ui main menu inverted">
+    <div class="navbar ui main menu" style="background: #33CCCC; border-radius:0px; margin-bottom:0px" id = "logo-navbar">
       <a class="item">
-        <div class="logo-navbar">
+        <div id="logo-navbar">
           Jade
         </div>
+      </a>
+
+      <div class="right menu">
       <a class="item">
         <i class="add icon"></i> Create a Poll
       </a>
-      <div class="right menu">
-        <div class="ui dropdown item">
+<!--         <div class="ui dropdown item">
           My Account <i class="dropdown icon"></i>
           <div class="menu">
-            <a class="item">English</a>
-            <a class="item">Russian</a>
-            <a class="item">Spanish</a>
+            <a class="item">Account Settings</a>
+            <a class="item">Logout</a>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
