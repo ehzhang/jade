@@ -1,6 +1,7 @@
 # Django settings for NewDoc project.
-from os.path import join
 from os.path import dirname
+from os.path import join
+from os.path import realpath
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
@@ -11,9 +12,8 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-STATIC_URL = '/common/static/'
 TEMPLATE_DIRS = (
-    join(dirname(__file__), 'common/templates'),
+    join(realpath(dirname(__file__)), 'templates'),
 )
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
@@ -74,7 +74,8 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+#STATIC_ROOT = join(realpath(dirname(__file__)), 'static/')
+STATIC_ROOT = '/home/jin/Projects/jade/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
