@@ -1,0 +1,18 @@
+/*@jade: #009999;
+@jadelight: #33CCCC;
+@jadedark: #1D7373;*/
+
+.logo,
+.logo-navbar {
+	font-family: "Pacifico", "Helvetica Neue", "Open Sans"
+}
+
+.logo-navbar {
+	font-color: black;
+}
+
+body {
+	font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	background:url("../images/noisy.png") repeat;
+	font-weight: 300;
+	}
