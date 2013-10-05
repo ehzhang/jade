@@ -1,16 +1,50 @@
 <!doctype html>
 <html>
-    <head>
-        {% block head %}
+  <head>
+    {% block head %}
 
-        {% load staticfiles %}
-            <link href="{% static 'css/semantic-0.2.4.min.css' %}" rel="stylesheet" type="text/css">
+    {% load staticfiles %}
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="{% static 'css/semantic-0.2.4.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/jade.less' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'js/less-1.4.1.min.js' %}" type="text/javascript"></script>
 
-        {% endblock %}
-    </head>
-    <body>
-        {% block navbar %}{% endblock %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block navbar %}      
+    <div class="ui menu">
+      <a class="active item">
+        <i class="home icon"></i> Home
+      </a>
+      <a class="item">
+        <i class="mail icon"></i> Messages
+      </a>
+      <a class="item">
+        <i class="user icon"></i> Friends
+      </a>
+      <div class="right menu">
+        <div class="borderless vertically fitted item">
+          <div class="ui icon input">
+            <input type="text" placeholder="Search...">
+            <i class="search link icon"></i>
+          </div>
+        </div>
+        <div class="ui dropdown item">
+          Language <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item">English</a>
+            <a class="item">Russian</a>
+            <a class="item">Spanish</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        {% block content %}{% endblock %}
-    </body>
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+  </body>
+
+  <script src="{% static 'js/jquery-2.0.3.min.js' %}">
 </html>
