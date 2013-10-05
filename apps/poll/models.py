@@ -46,12 +46,17 @@ class Option(models.Model):
         _('number of upvotes'),
     )
 
-    def __unicode__(self):
-        return u'%s' % (self.text, )
-
     downvotes = models.IntegerField(
         _('number of downvotes'),
     )
+
+    def __unicode__(self):
+        return u'%s' % (self.text, )
+
+    def upvote(self):
+        self.upvotes += 1
+        self.save()
+
 
 class Comment(models.Model):
 
