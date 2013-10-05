@@ -97,9 +97,6 @@ class Comment(models.Model):
         _('comment text'),
     )
 
-    def votes(self):
-        return self.upvotes - self.downvotes
-
     upvotes = models.IntegerField(
         _('number of upvotes'),
         default=0,
@@ -112,6 +109,9 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.text, )
+
+    def votes(self):
+        return self.upvotes - self.downvotes
 
     def upvote(self):
         self.upvotes += 1

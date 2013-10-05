@@ -15,7 +15,7 @@ class Card(object):
 
         self.text = option.text
         self.submitter = option.submitter
-        self.votes = option.get_votes()
+        self.votes = option.votes()
         self.comments = [
             DisplayComment(comment) for comment in
             Comments.objects.filter(option=option)
@@ -32,5 +32,5 @@ class DisplayComment(object):
         self.comment_id = comment.id
         self.text = comment.text
         self.submitter = comment.submitter
-        self.votes = comment.votes
+        self.votes = comment.votes()
 
