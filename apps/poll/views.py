@@ -1,6 +1,6 @@
 from json import dumps
 
-from django.conf.settings import DEBUG
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -20,7 +20,7 @@ def get_post_request_attr(request, attr):
     '''
     Gets 
     '''
-    if DEBUG:
+    if settings.DEBUG:
         return request.REQUEST.get(attr)
     else:
         return request.POST.get(attr)
@@ -56,7 +56,19 @@ def create_option(request):
     text = get_post_request_attr(request, 'text')
 
     poll = Poll.objects.get(id=poll_id)
-    poll 
+    public_id = Option.objects.count()  # race condition bug
+
+    option = Option.objects.create(
+        poll=poll,
+        public_id=public_id,
+        submitter=submitter,
+        text=text,
+    )
+    option.save()
+    data = {
+        'result': 'success',
+    }
+    return JSONResponse(data)
 
 
 def option_upvote(request, option_id):
