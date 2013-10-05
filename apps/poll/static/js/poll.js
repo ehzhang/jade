@@ -1,20 +1,15 @@
-<script>
-	var xmlhttp;
+var xmlhttp;
 
-	function refresh() {
-		if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-  			xmlhttp=new XMLHttpRequest();
-  		}
-		else { // code for IE6, IE5
-  			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  		}
-  		xmlhttp.onreadystatechange=function() {
-			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-	    		document.getElementById("myDiv").innerHTML=xmlhttp.responseText; // CHANGE THE DIV ELEMENT
-    		}
-		}
-		xmlhttp.open("GET","demo_get.asp",true); // CHANGE THE GET URL
-		xmlhttp.send();
-	}
-	var int = setInterval(function() {refresh()}, 1000);
-</script>
+function refresh() {
+    if (window.XMLHttpRequest) {
+        xmlhttp=new XMLHttpRequest();
+    }
+        xmlhttp.onreadystatechange=function() {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                document.getElementById("myDiv").innerHTML=xmlhttp.responseText; // CHANGE THE DIV ELEMENT
+        }
+        }
+        xmlhttp.open("GET","demo_get.asp",true); // CHANGE THE GET URL
+        xmlhttp.send();
+}
+var int = setInterval(function() {refresh()}, 1000);
