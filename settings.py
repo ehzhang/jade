@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     # Internal Applications
     'apps.common',
     'apps.my',
+    'apps.poll',
     'apps.tools',
 )
 

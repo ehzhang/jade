@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^my/', include('jade.apps.my.urls')),
+    url(r'^poll/', include('jade.apps.poll.urls')),
 )
 
 urlpatterns += common_urls.urlpatterns
