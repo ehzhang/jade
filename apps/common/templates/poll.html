@@ -2,13 +2,11 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="ui stacked segment">
-        <h1>{{ poll.name }}</h1>
+<div class="box-title">
+        <h1 id="question-title">{{ poll.name }}</h1>
         {% if poll.submitter %}
         <p>Asked by {{ poll.submitter }}
         {% endif %}
-    </div>
 </div>
 
 <div class="three column stackable ui grid" id="cards">
