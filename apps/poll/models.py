@@ -55,6 +55,11 @@ class Option(models.Model):
         default=0,
     )
 
+    votes = models.IntegerField(
+        _('number of upvotes - downvotes'),
+        default=0,
+    )
+
     def __unicode__(self):
         return u'%s' % (self.text, )
 
@@ -63,17 +68,21 @@ class Option(models.Model):
 
     def upvote(self):
         self.upvotes += 1
+        self.votes += 1
         self.save()
 
     def undo_upvote(self):
         self.upvotes -= 1
+        self.votes -= 1
         self.save()
 
     def downvote(self):
         self.downvotes += 1
+        self.downvotes += 1
         self.save()
 
     def undo_downvote(self):
+        self.downvotes -= 1
         self.downvotes -= 1
         self.save()
 

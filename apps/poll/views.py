@@ -81,7 +81,7 @@ def poll_redraw(request):
     poll_id = request.GET.get('poll_id')
     poll = Poll.objects.get(id=poll_id)
 
-    cards = [Card(option.id, request) for option in Option.objects.filter(poll=poll).order_by('-upvotes', 'id')]
+    cards = [Card(option.id, request) for option in Option.objects.filter(poll=poll).order_by('-votes', 'id')]
     data = {
         'card_html': '',
     }
