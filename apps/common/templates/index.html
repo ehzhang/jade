@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="four wide column center">
-          <div class="ui massive orange button use-oswald" id="createpoll">Create a Storm</div>
+          <div class="ui massive orange button disabled use-oswald" id="createpoll">Create a Storm</div>
         </div>
         <div class="two wide column"></div>
       </div>
@@ -48,24 +48,37 @@
 </div>
 
 <script type="text/javascript">
+    function calculatebtn() {
+        if ($('#question')[0].value != '') {
+            $('#createpoll').removeClass('disabled');
+        }
+        else{
+            $('#createpoll').addClass('disabled');
+        }
+    }
+
+    $("#question").keyup(calculatebtn)
+
     $("#createpoll").click(function(){
-        var question = $('#question')[0].value;
-        var csrf_token = $('[name="csrfmiddlewaretoken"]')[0].value;
-        $.post(
-            "{% url 'create_poll' %}",
-            {
-                'name': question,
-                'csrfmiddlewaretoken': csrf_token
-            },
-            function(response){
-                if (response.result == 'success'){
-                    $('.create.modal').modal('show');
-                    $('#poll_url')[0].setAttribute('href', response.url);
-                    $('#poll_url')[0].innerHTML = response.fullurl;
-                    $('.create.modal').modal('show');
+        if (!$(this).hasClass('disabled')) {
+            var question = $('#question')[0].value;
+            var csrf_token = $('[name="csrfmiddlewaretoken"]')[0].value;
+            $.post(
+                "{% url 'create_poll' %}",
+                {
+                    'name': question,
+                    'csrfmiddlewaretoken': csrf_token
+                },
+                function(response){
+                    if (response.result == 'success'){
+                        $('.create.modal').modal('show');
+                        $('#poll_url')[0].setAttribute('href', response.url);
+                        $('#poll_url')[0].innerHTML = response.fullurl;
+                        $('.create.modal').modal('show');
+                    }
                 }
-            }
-        )
+            )
+        }
     });
 
 </script>

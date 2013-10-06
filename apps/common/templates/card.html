@@ -17,8 +17,34 @@
 <div class="box-title">
         <div class="ui grid">
             <div class="two wide column">
+                <div class="four wide column" id="votes">
+                <div class="ui top attached segment" >
+                    <a href="javascript:void(0)" onclick="upvote({{ card.option_id }})" style="position:relative; left:-15px;">
+                        {% if card.user_vote == 1 %}
+                        <i class="green up arrow icon up-down-vote" ></i>
+                        {% else %}
+                        <i class="black up arrow icon up-down-vote" ></i>
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="ui attached segment">
+                    <h3 class="ui center aligned header" style="position:relative; left:-5px;">
+                        {{ card.votes }}
+                    </h3>
+                </div>
+                <div class="ui bottom attached segment">
+                    <a href="javascript:void(0)" onclick="downvote({{ card.option_id }})" style="position:relative; left:-15px;">
+                        {% if card.user_vote == -1 %}
+                        <i class="red down arrow icon up-down-vote"></i>
+                        {% else %}
+                        <i class="black down arrow icon up-down-vote"></i>
+                        {% endif %}
+                    </a>
+                </div>
                 <!-- votes -->
             </div>
+            </div>
+            <!--  -->
             <div class="fourteen wide column">
                 <h1>{{ card.text }}</h1>
                 {% if card.submitter %}
@@ -56,6 +82,7 @@
             }
         );
     }
+
     function reply(){
         $('#comment').submit();
     }
@@ -76,12 +103,42 @@
             function(response){
                 if (response['result'] == 'success'){
                     $('#comment_text')[0].value = '';
+                }
+            })
+    });
+
+    function upvote(option_id){
+        $.post(
+            '{% url "option_upvote" %}',
+            {
+                option_id: option_id,
+                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+            },
+            function(response){
+                if (response.result == 'success'){
                     redraw();
                 }
             }
         );
         return false;
-    });
+    }
+
+    function downvote(option_id){
+        $.post(
+            '{% url "option_downvote" %}',
+            {
+                option_id: option_id,
+                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+            },
+            function(response){
+                if (response.result == 'success'){
+                    redraw();
+                }
+            }
+        );
+        return false;
+    }
+
     setInterval(redraw, 1000);
 
 </script>
