@@ -1,15 +1,27 @@
 <div class='column'>
     <div class="ui segment">
-        <div class='meta'>
-            {{ card.votes }} votes
-        </div>
-        <div class='name'><h2><a href="{% url 'card_atomic' card.option_id %}">{{ card.text | truncatechars:35}}</a></h2></div>
-        <p class='description'>
-            -- {{ card.submitter | truncatechars:20 }}
-        </p>
-        <div class='extra'>
-            {{ card.comments | length }} comments
+        <div class="ui divided grid">
+            <div class="fourteen wide column">
+                <div class="row">
+                    {{ card.votes }} votes
+                </div>
+                <div class='name'>
+                    <h2>
+                        <a href="{% url 'card_atomic' card.option_id %}">
+                            {{ card.text | truncatechars:35}}
+                        </a>
+                    </h2>
+                </div>
+                <p class='description'>
+                -- {{ card.submitter | truncatechars:20 }}
+                </p>
+                <div class='extra'>
+                    {{ card.comments | length }} comments
+                </div>
+            </div>
+            <div class="two wide column">
+                Text here...
+            </div>
         </div>
     </div>
 </div>
-
