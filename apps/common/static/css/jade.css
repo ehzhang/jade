@@ -102,3 +102,9 @@ a {
     margin-right: auto;
     width: 32px;
 }
+
+#add_idea {
+	position: fixed;
+	bottom: 0;
+
+}
