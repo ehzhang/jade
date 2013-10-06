@@ -9,10 +9,11 @@ urlpatterns = patterns('jade.apps.poll.views',
         name='card_atomic'),
 
     url(r'^create/$', 'create_poll'),
+    url(r'^poll_redraw/$', 'poll_redraw', name='poll_redraw'),
 
     url(r'^create_option/$', 'create_option'),
-    url(r'^option_upvote/$', 'option_upvote'),
-    url(r'^option_downvote/$', 'option_downvote'),
+    url(r'^option_upvote/$', 'option_upvote', name='option_upvote'),
+    url(r'^option_downvote/$', 'option_downvote', name='option_downvote'),
     url(r'^option_redraw/$', 'option_redraw', name='option_redraw'),
 
     url(r'^create_comment/$', 'create_comment',

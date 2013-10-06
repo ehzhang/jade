@@ -67,3 +67,15 @@ body {
 #generatedHyperlink {
 	color: #0099FF;
 }
+
+a {
+    color: #2A5DB0;
+    text-decoration: none;
+}
+
+.ui.attached.segment > a > i.up-down-vote {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 32px;
+}

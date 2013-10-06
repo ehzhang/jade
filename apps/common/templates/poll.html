@@ -11,11 +11,62 @@
     </div>
 </div>
 
-<div class="three column stackable ui grid">
+<div class="three column stackable ui grid" id="cards">
     {% for card in cards %}
     {% include 'card_front.html' %}
     {% endfor %}
 </div>
+
+{% csrf_token %}
+
+<script type="text/javascript">
+    function redraw(){
+        $.get(
+            '{% url "poll_redraw" %}',
+            {
+                poll_id: {{ poll.id  }},
+                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+            },
+            function(response){
+                $('#cards')[0].innerHTML = response.card_html;
+            }
+        );
+    }
+
+    function upvote(option_id){
+        $.post(
+            '{% url "option_upvote" %}',
+            {
+                option_id: option_id,
+                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+            },
+            function(response){
+                if (response.result == 'success'){
+                    redraw();
+                }
+            }
+        );
+        return false;
+    }
+
+    function downvote(option_id){
+        $.post(
+            '{% url "option_downvote" %}',
+            {
+                option_id: option_id,
+                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+            },
+            function(response){
+                if (response.result == 'success'){
+                    redraw();
+                }
+            }
+        );
+        return false;
+    }
+
+    setInterval(redraw, 1000);
+</script>
 
 {% endblock %}
 

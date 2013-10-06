@@ -10,7 +10,6 @@ from jade.apps.poll.models import Comment
 from jade.apps.poll.models import Option
 from jade.apps.poll.models import Poll
 from jade.apps.poll.utils import Card
-from jade.apps.poll.utils import Card
 
 
 def JSONResponse(data):
@@ -67,6 +66,26 @@ def create_poll(request):
         'result': 'success',
         'url': reverse('poll_atomic', args=(poll.id, ))
     }
+    return JSONResponse(data)
+
+
+def poll_redraw(request):
+    def create_html(card):
+        context = {
+            'card': card,
+        }
+        return render_to_string('card_front.html', context)
+
+    poll_id = request.GET.get('poll_id')
+    poll = Poll.objects.get(id=poll_id)
+
+    cards = [Card(option.id) for option in Option.objects.filter(poll=poll)]
+    data = {
+        'card_html': '',
+    }
+    for card in cards:
+        data['card_html'] += create_html(card)
+
     return JSONResponse(data)
 
 
