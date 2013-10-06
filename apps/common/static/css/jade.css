@@ -1,4 +1,4 @@
-/*@jade: #009999;
+/*@orange: #E5A900;
 @jadelight: #33CCCC;
 @jadedark: #1D7373;*/
 
@@ -8,9 +8,9 @@ body {
 	margin: 0px;
 	font-family: "Oswald", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	background: white;
-	background:url("../images/noisy.png") repeat;
-	font-weight: 300;
-}
+	background:url("../images/concrete_wall.png") repeat;
+	font-weight: 400;
+	}
 
 .logo,
 .logo-navbar,
@@ -19,35 +19,31 @@ body {
 	font-size: 18px;
 }
 
-#logo-navbar > .ui.menu .item{
-	color: white;
-}
-
 .logo-big,
 .logo-description {
-   position: absolute;
-   top: 50%;
-   margin-top: -40vmin;/* half of #content height*/
-   left: 0;
-   width: 100%;
-   font-size: 25vh;
-   color: #009999;
-   font-weight: 400;
+	color: #E5A900;
+	font-weight: 400;
+	font-size: 22vw;
+	text-shadow: 0px 0px 1px #BABABA;
 }
 
 .logo-description {
-	margin-top: -8vmin;
-	font-size: 7vh;
+	color: #303030;
+	font-size: 7vmin;
+	margin-bottom: 20px;
 }
 
-.banner {
-	width: 100%;
-	height: 75vmin;
+.box {
+	margin: 16px 16px 0px 16px;
 	background: white;
+	border: 1px #262626;
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.065);
+	padding-bottom: 50px;
+
 }
 
 .navbar {
-	background: #1D7373;
+	background: #E5A900;
 	color: white;
 }
 
