@@ -5,6 +5,8 @@ from django.conf.urls import url
 
 urlpatterns = patterns('jade.apps.poll.views',
     url(r'^(?P<poll_id>\d+)/$', 'poll_atomic', name='poll_atomic'),
+    url(r'^card/(?P<card_id>\d+)/$', 'card_atomic',
+        name='card_atomic'),
 
     url(r'^create/$', 'create_poll'),
 

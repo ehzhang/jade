@@ -3,7 +3,7 @@
         <div class='meta'>
             {{ card.votes }} votes
         </div>
-        <div class='name'><h2>{{ card.text | truncatechars:35}}</h2></div>
+        <div class='name'><h2><a href="{% url 'card_atomic' card.option_id %}">{{ card.text | truncatechars:35}}</a></h2></div>
         <p class='description'>
             -- {{ card.submitter | truncatechars:20 }}
         </p>

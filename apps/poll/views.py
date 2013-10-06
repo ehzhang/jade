@@ -35,13 +35,16 @@ def poll_atomic(request, poll_id):
     poll = Poll.objects.get(id=transform_poll_id(poll_id))
     cards = [Card(option.id) for option in 
              Option.objects.filter(poll=poll)]
-
     context = {
         'poll': poll,
         'cards': cards,
     }
 
     return render(request, 'poll.html', context)
+
+def card_atomic(request, card_id):
+
+    pass
 
 
 def create_poll(request):
