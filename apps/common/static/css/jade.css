@@ -40,10 +40,10 @@ body {
 .box-grey {
 	margin: 0px 16px 0px 16px;
 	padding: 25px;
+	padding-bottom: 30px;
 	background: white;
 	border: 1px #262626;
 	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-	padding-bottom: 30px;
 }
 
 .banner {
@@ -62,4 +62,8 @@ body {
 .container {
     width: 915px;
     margin: 20px auto;
+}
+
+#generatedHyperlink {
+	color: #0099FF;
 }

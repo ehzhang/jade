@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script>
+
+$('.ui.modal')
+  .modal()
+;
+
+</script>
+
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header large">
+    Your Poll has been Created!
+  </div>
+  <div class="content">
+    <h2> Visit/Share this link: <a href ="foobar"> http://fuckthepolice.com </a> </h2>
+  </div>
+  <div class="actions">
+    <div class="ui blue button"> <i class="share icon"></i>SHARE</div>
+    <div class="ui orange button">OK</div>
+  </div>
+</div>
 
 <center>
 <div class="three row middle aligned column banner">
@@ -12,10 +33,23 @@
     <div class="row logo-description">
       Organize your group's ideas, instantly.
     </div>
-    <div class="row">
-      <a class="ui orange massive button">Create a Poll Now</a>
+    <div class="middle align row">
+      <div class="stackable ui grid">
+        <div class="two wide column"></div>
+        <div class="eight wide column">
+          <div class="ui massive fluid input">
+            <input type="text" placeholder="Propose a topic / Ask a Question">
+          </div>
+        </div>
+        <div class="four wide column center">
+          <div class="ui massive orange button" id="createpoll" onClick="$('.ui.modal').modal('toggle')">Create a Poll Now</div>
+        </div>
+        <div class="two wide column"></div>
+      </div>
     </div>
 </div>
+
+
 <div class="box">
   <div class="two column stackable ui grid">
   <div class="column">
