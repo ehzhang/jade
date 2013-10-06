@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 
 from jade.apps.poll.models import Comment
 from jade.apps.poll.models import Option
@@ -165,6 +166,27 @@ def option_downvote(request):
         'result': 'success',
     }
     return JSONResponse(data)
+
+
+def option_redraw(request):
+    def create_html(comment):
+        context = {
+            'comment': comment,
+        }
+        return render_to_string('comment.html', context)
+
+    option_id = request.GET.get('option_id')
+    option = Option.objects.get(id=option_id)
+
+    comments = Comment.objects.filter(option=option)
+    data = {
+        'comment_html': '',
+    }
+    for comment in comments:
+        data['comment_html'] += create_html(comment)
+
+    return JSONResponse(data)
+
 
 def comment_upvote(request):
     comment_id = get_post_request_attr(request, 'comment_id')

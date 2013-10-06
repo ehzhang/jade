@@ -30,16 +30,13 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" id="comments">
     {% for comment in card.comments %}
-    <div class="ui segment">
-        <p>{{ comment.text }}</p>
-        {% if comment.submitter %}
-            <p align="right"> -- {{ comment.submitter }}</p>
-        {% endif %}
-    </div>
+        {% include 'comment.html' %}
     {% endfor %}
-    
+</div>
+
+<div class="container">
     <form id="comment" action="{% url 'create_comment' %}"
         method="post">
         {% csrf_token %}
@@ -53,7 +50,13 @@
 
 <script type="text/javascript">
     function redraw(){
-        console.log('redraw');
+        $.get(
+            "{% url 'option_redraw' %}",
+            {'option_id': {{ card.option_id }}},
+            function(result){
+                $('#comments')[0].innerHTML = result['comment_html'];
+            }
+        );
     }
     function reply(){
         $('#comment').submit(function(){

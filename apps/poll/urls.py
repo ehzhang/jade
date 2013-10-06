@@ -13,6 +13,7 @@ urlpatterns = patterns('jade.apps.poll.views',
     url(r'^create_option/$', 'create_option'),
     url(r'^option_upvote/$', 'option_upvote'),
     url(r'^option_downvote/$', 'option_downvote'),
+    url(r'^option_redraw/$', 'option_redraw', name='option_redraw'),
 
     url(r'^create_comment/$', 'create_comment',
         name='create_comment'),
