@@ -31,7 +31,7 @@ class CardBack(Card):
     comments = None
 
     def __init__(self, option_id):
-        super(CardFront, self).__init__(option_id)
+        super(CardBack, self).__init__(option_id)
         option = Option.objects.get(id=option_id)
 
         self.comments = [

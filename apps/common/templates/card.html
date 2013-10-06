@@ -2,7 +2,74 @@
 
 {% block content %}
 
-{% include "card_front.html" %}
+<div class="ui grid container" style="margin-top: 20px">
+    <div class="two wide column">&nbsp;</div>
+    <div class="two wide column">
+        <div class="ui icon header">
+            <i class="circular question icon"></i>
+        </div>
+    </div>
+    <div class="ten wide column">
+        <h1>{{ poll.name }}</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="ui piled segment">
+        <div class="ui grid">
+            <div class="two wide column">
+                votes
+            </div>
+            <div class="fourteen wide column">
+                <h1>{{ card.text }}</h1>
+                {% if card.submitter %}
+                    <p align="right">Posted by {{ card.submitter }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    {% for comment in card.comments %}
+    <div class="ui segment">
+        <p>{{ comment.text }}</p>
+        <p align="right"> -- {{ comment.submitter }}</p>
+    </div>
+    {% endfor %}
+    
+    <form id="comment" action="{% url 'create_comment' %}"
+        method="post">
+        {% csrf_token %}
+        <div class="ui fluid icon input">
+            <input type="text" name="text" placeholder="Add a new comment">
+            <i class="teal pencil icon"></i>
+        </div>
+        <input type="hidden" name="option_id" value="{{ card.option_id }}">
+    </form>
+</div>
+
+<script type="text/javascript">
+    function reply(){
+        $('#comment').submit(function(){
+            $.post(
+                $(this).attr('action'),
+                $(this).serialize(),
+                function(result){
+                    if (result['result'] == 'success'){
+                        console.log('success');
+                    }
+                }
+            );
+            return false;
+        });
+    }
+    $('#comment').keypress(function(event){
+        if (event.which == 13){
+            reply();
+        }
+    })
+</script>
 
 {% endblock %}
 
