@@ -59,27 +59,31 @@
         );
     }
     function reply(){
-        $('#comment').submit(function(){
-            $.post(
-                $(this).attr('action'),
-                $(this).serialize(),
-                function(result){
-                    if (result['result'] == 'success'){
-                        $('#comment_text')[0].value = '';
-                        redraw();
-                    }
-                }
-            );
-            return false;
-        });
+        $('#comment').submit();
     }
-    $('#comment').keypress(function(event){
+
+    $('#comment_text').keyup(function(event){
         if (event.which == 13){
             reply();
         }
     });
 
-    setInterval(redraw, 1000);
+    $('#comment').submit(function(){
+        if ($("#comment_text")[0].value == ''){
+            return false;
+        }
+        $.post(
+            $(this).attr('action'),
+            $(this).serialize(),
+            function(response){
+                if (response['result'] == 'success'){
+                    $('#comment_text')[0].value = '';
+                    redraw();
+                }
+            }
+        );
+        return false;
+    });
 
 </script>
 
