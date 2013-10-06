@@ -1,19 +1,6 @@
 <div class='column'>
     <div class="ui segment">
         <div class="ui divided grid">
-            <div class="two wide column">
-                <div class="ui top attached basic button">
-                    <i class="green up medium arrow icon"></i>
-                </div>
-                <div class="ui attached segment">
-                    <h3 class="ui center aligned header">
-                        3
-                    </h2>
-                </div>
-                <div class="ui bottom attached basic button">
-                    <i class="red down medium arrow icon"></i>
-                </div>
-            </div>
             <div class="fourteen wide column">
                 <div class="row">
                     {{ card.votes }} votes
@@ -28,11 +15,29 @@
                 <p class='description'>
                 -- {{ card.submitter | truncatechars:20 }}
                 </p>
-                {% if card.comments %}
-                <div class='ui bottom right attached label'>
-                    {{ card.comments | length }} comments
+                <!--
+                <div class='ui bottom left attached purple label'>
+                    submitter
                 </div>
-                {% endif %}
+                -->
+            </div>
+            <div class="two wide column">
+                <div class="ui top attached basic button">
+                    <i class="green up medium arrow icon"></i>
+                </div>
+                <div class="ui attached segment">
+                    <h3 class="ui center aligned header">
+                        3
+                    </h2>
+                </div>
+                <div class="ui bottom attached basic button">
+                    <i class="red down medium arrow icon"></i>
+                </div>
+                <br/>
+                <div class="ui attached mini labeled button">
+                    <i class="comment icon"></i>
+                    {{ card.comments | length }}
+                </div>
             </div>
         </div>
     </div>
