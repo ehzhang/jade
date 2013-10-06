@@ -115,5 +115,16 @@ a {
 }
 
 .footer {
-	background: ;
+	background: #303030;
+	height: 60px;
+}
+
+.footer-color {
+	background: #E5A900;
+	height: 5px;
+	width: 100%;
+}
+
+.footer-text {
+	color: #33CCCC;
 }
