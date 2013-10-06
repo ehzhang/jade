@@ -10,7 +10,7 @@ from jade.apps.poll.models import Comment
 from jade.apps.poll.models import Option
 from jade.apps.poll.models import Poll
 from jade.apps.poll.utils import Card
-from jade.apps.poll.utils import CardBack
+from jade.apps.poll.utils import Card
 
 
 def JSONResponse(data):
@@ -48,7 +48,7 @@ def card_atomic(request, card_id):
 
     option = Option.objects.get(id=card_id)
     poll = option.poll
-    card = CardBack(card_id)
+    card = Card(card_id)
 
     context = {
         'card': card,
