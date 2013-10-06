@@ -6,15 +6,21 @@
 
 body {
 	margin: 0px;
-	font-family: "Oswald", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	background: white;
 	background:url("../images/concrete_wall.png") repeat;
-	font-weight: 400;
+	font-weight: 300;
 	}
 
+.use-oswald {
+	font-family: "Oswald", "Helvetica Neue", "Open Sans", sans-serif;
+}
+
 .logo,
-.logo-navbar,
-.logo-big {
+#logo-navbar,
+.logo-big,
+.logo-description,
+.question-title {
 	font-family: "Oswald", "Helvetica Neue", "Open Sans", sans-serif;
 	font-size: 18px;
 }
@@ -34,15 +40,19 @@ body {
 }
 
 .logo-image {
-	height: 13vw
+	background: #E5A900;
+	height: 13vw;
 }
 
-.logo-navbar-image {
-	height:18px;
+#question-title {
+	font-family: "Oswald", "Helvetica Neue", "Open Sans", sans-serif;
+	font-size: 4vw;
+	font-weight: 400;
 }
 
 .banner,
 .box,
+.box-title,
 .box-white,
 .box-orange,
 .box-grey {
@@ -54,8 +64,13 @@ body {
 	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
 }
 
-.banner {
+.banner,
+.box-title {
 	margin-top: 16px;
+}
+
+.box-title {
+	margin-bottom: 16px;
 }
 
 .navbar {
