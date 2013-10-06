@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="ten wide column">
-        <h1>{{ poll.name }}</h1>
+        <h1><a href="{% url 'poll_atomic' poll.id %}">{{ poll.name }}</a></h1>
     </div>
 </div>
 
@@ -34,7 +34,9 @@
     {% for comment in card.comments %}
     <div class="ui segment">
         <p>{{ comment.text }}</p>
-        <p align="right"> -- {{ comment.submitter }}</p>
+        {% if comment.submitter %}
+            <p align="right"> -- {{ comment.submitter }}</p>
+        {% endif %}
     </div>
     {% endfor %}
     
@@ -42,7 +44,7 @@
         method="post">
         {% csrf_token %}
         <div class="ui fluid icon input">
-            <input type="text" name="text" placeholder="Add a new comment">
+            <input type="text" name="text" placeholder="Add a new comment" id="comment_text">
             <i class="teal pencil icon"></i>
         </div>
         <input type="hidden" name="option_id" value="{{ card.option_id }}">
@@ -50,6 +52,9 @@
 </div>
 
 <script type="text/javascript">
+    function redraw(){
+        console.log('redraw');
+    }
     function reply(){
         $('#comment').submit(function(){
             $.post(
@@ -57,7 +62,8 @@
                 $(this).serialize(),
                 function(result){
                     if (result['result'] == 'success'){
-                        console.log('success');
+                        $('#comment_text')[0].value = '';
+                        redraw();
                     }
                 }
             );
@@ -68,7 +74,10 @@
         if (event.which == 13){
             reply();
         }
-    })
+    });
+
+    setInterval(redraw, 1000);
+
 </script>
 
 {% endblock %}
