@@ -104,7 +104,9 @@
                 if (response['result'] == 'success'){
                     $('#comment_text')[0].value = '';
                 }
-            })
+                redraw();
+            });
+        return false;
     });
 
     function upvote(option_id){
