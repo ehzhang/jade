@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="ui piled segment">
+        <h1>{{ poll.name }}</h1>
+        {% if poll.submitter %}
+            <p>Asked by {{ poll.submitter }}
+        {% endif %}
+    </div>
+</div>
+
+    <div class="items three column stackable ui grid">
+        {% for card in cards %}
+            {% include 'card_front.html' %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+

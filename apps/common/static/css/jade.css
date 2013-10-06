@@ -54,3 +54,8 @@ body {
 .ui.items > .front-card{
     min-height: 150px;
 }
+
+.container {
+    width: 915px;
+    margin: 20px auto;
+}

@@ -1,11 +1,11 @@
-<div class='ui items'>
-    <div class='item front-card'>
+<div class='column'>
+    <div class="ui segment">
         <div class='meta'>
             {{ card.votes }} votes
         </div>
-        <div class='name'><h2>{{ card.text | truncatechars:50}}</h2></div>
+        <div class='name'><h2>{{ card.text | truncatechars:35}}</h2></div>
         <p class='description'>
-            -- {{ card.submitter | truncatechars:50 }}
+            -- {{ card.submitter | truncatechars:20 }}
         </p>
         <div class='extra'>
             {{ card.comments | length }} comments

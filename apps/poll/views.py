@@ -8,6 +8,7 @@ from django.shortcuts import render
 from jade.apps.poll.models import Comment
 from jade.apps.poll.models import Option
 from jade.apps.poll.models import Poll
+from jade.apps.poll.utils import Card
 
 
 def JSONResponse(data):
@@ -18,7 +19,7 @@ def JSONResponse(data):
 
 def get_post_request_attr(request, attr):
     '''
-    Gets 
+    Gets attributes 
     '''
     if settings.DEBUG:
         return request.REQUEST.get(attr)
@@ -32,8 +33,12 @@ def transform_poll_id(poll_hash):
 def poll_atomic(request, poll_id):
     
     poll = Poll.objects.get(id=transform_poll_id(poll_id))
+    cards = [Card(option.id) for option in 
+             Option.objects.filter(poll=poll)]
+
     context = {
         'poll': poll,
+        'cards': cards,
     }
 
     return render(request, 'poll.html', context)
