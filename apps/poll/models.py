@@ -30,7 +30,6 @@ class Option(models.Model):
     submitter = models.CharField(
         _('name of option submitter'),
         max_length=100,
-        blank=True,
     )
 
     text = models.CharField(

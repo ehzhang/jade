@@ -44,8 +44,10 @@
                 </div>
                 <br/>
                 <div class="ui attached mini labeled button">
-                    <i class="comment icon"></i>
-                    {{ card.comments | length }}
+                    <a href="{% url 'card_atomic' card.option_id %}">
+                        <i class="comment icon"></i>
+                        {{ card.comments | length }}
+                    </a>
                 </div>
             </div>
         </div>

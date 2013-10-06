@@ -17,14 +17,63 @@
     {% endfor %}
 </div>
 
+<div class="ui horizontal icon divider">
+    <i class="circular bolt icon"></i>
+</div>
+
+<div class="container">
+    <div class="ui segment">
+        <form id="new_option_form" action="{% url 'create_option' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="poll_id" value="{{ poll.id }}">
+            <div class="ui fluid input">
+                <input id="option_input" type="text" name="text" placeholder="Add a new option">
+            </div>
+            <div class="ui action input" style="margin-top:20px">
+                <input id="username_input" type="text" name="submitter" placeholder="Your name">
+                <div id="add_btn" class="ui teal disabled button"><i class="user icon"></i> Add Option</div>
+            </div>
+        </form>
+    </div>
+</div>
+
 {% csrf_token %}
 
 <script type="text/javascript">
+
+    $("#new_option_form").submit(function(){
+        $.post(
+            $(this).attr('action'),
+            $(this).serialize(),
+            function(response){
+                if (response.result == 'success'){
+                    redraw();
+                }
+            }
+        );
+        return false;
+    });
+
+    $("#add_btn").click(function(){
+        if (!$(this).hasClass('disabled')){
+            $("#new_option_form").submit();
+        }
+    });
+
+    function calculate_btn(){
+        if ($('#option_input')[0].value != '' && $('#username_input')[0].value != ''){
+            $('#add_btn').removeClass('disabled');
+        }
+        else{
+            $('#add_btn').addClass('disabled');
+        }
+    }
+
     function redraw(){
         $.get(
             '{% url "poll_redraw" %}',
             {
-                poll_id: {{ poll.id  }},
+                poll_id: {{ poll.id }},
                 csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
             },
             function(response){
@@ -64,6 +113,9 @@
         );
         return false;
     }
+
+    $("#option_input").keyup(calculate_btn);
+    $("#username_input").keyup(calculate_btn);
 
     setInterval(redraw, 1000);
 </script>
