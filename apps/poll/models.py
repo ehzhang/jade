@@ -18,6 +18,9 @@ class Poll(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name, )
 
+    def sorted_Options(self):
+        return 
+
 
 class Option(models.Model):
 
