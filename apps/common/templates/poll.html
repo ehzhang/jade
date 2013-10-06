@@ -13,7 +13,9 @@
         </div>
         <div class="one wide column"></div>
         <div class="four wide column">
-            <div class="ui orange button"><i class="add icon"></i> Add an Idea </div>
+            <a href="#option_input">
+                <div class="ui orange button"><i class="add icon"></i> Add an Idea </div>
+            </a>
         </div>
     </div>
 </div>
@@ -60,6 +62,11 @@
 {% csrf_token %}
 
 <script type="text/javascript">
+
+    $("a[href='#option_input']").click(function() {
+        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+        return false;
+    });
 
     $("#new_option_form").submit(function(){
         $.post(
