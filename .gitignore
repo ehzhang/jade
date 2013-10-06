@@ -3,3 +3,4 @@ ENV/
 .DS_Store
 database.db
 static/*
+settings_local.py

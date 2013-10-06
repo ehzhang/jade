@@ -89,6 +89,7 @@
 
     $('#comment_text').keyup(function(event){
         if (event.which == 13){
+	        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             return reply();
         }
     });
