@@ -3,10 +3,19 @@
 {% block content %}
 
 <div class="box-title">
-        <h1 id="question-title">{{ poll.name }}</h1>
-        {% if poll.submitter %}
-        <p>Asked by {{ poll.submitter }}
-        {% endif %}
+    <div class="ui middle aligned stackable grid">
+        <div class="one wide column"></div>
+        <div class="ten wide column">    
+            <h1 id="question-title">{{ poll.name }}</h1>
+            {% if poll.submitter %}
+            <p>Asked by {{ poll.submitter }}
+            {% endif %}
+        </div>
+        <div class="one wide column"></div>
+        <div class="four wide column">
+            <div class="ui orange button"><i class="add icon"></i> Add an Idea </div>
+        </div>
+    </div>
 </div>
 
 <div class="three column stackable ui grid" id="cards">
