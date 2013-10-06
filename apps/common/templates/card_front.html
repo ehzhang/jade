@@ -28,9 +28,11 @@
                 <p class='description'>
                 -- {{ card.submitter | truncatechars:20 }}
                 </p>
-                <div class='extra'>
+                {% if card.comments %}
+                <div class='ui bottom right attached label'>
                     {{ card.comments | length }} comments
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
