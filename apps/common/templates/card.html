@@ -17,7 +17,6 @@
 <div class="box-title">
         <div class="ui grid">
             <div class="two wide column">
-<<<<<<< HEAD
                 votes
                 <div class="four wide column" id="votes">
                 <div class="ui top attached segment" >
@@ -43,9 +42,7 @@
                         {% endif %}
                     </a>
                 </div>
-=======
                 <!-- votes -->
->>>>>>> 0249758151bc0b3f1b3a6da6f56f53d02f8b88a4
             </div>
             </div>
             <!--  -->
@@ -85,6 +82,7 @@
                 $('#comments')[0].innerHTML = result['comment_html'];
             }
         );
+        /*
         // $.get(
         //     "{% url 'votes_redraw' %}",
         //     {'option_id': {{ card.option_id }}},
@@ -92,6 +90,7 @@
         //         $('#votes')[0].innerHTML = result['votes_html'];
         //     }
         // );
+        */ 
     }
 
     function reply(){
@@ -116,7 +115,6 @@
         }
     });
 
-<<<<<<< HEAD
     function upvote(option_id){
         $.post(
             '{% url "option_upvote" %}',
@@ -150,9 +148,6 @@
     }
 
     setInterval(redraw, 1000);
-=======
-    //setInterval(redraw, 1000);
->>>>>>> 0249758151bc0b3f1b3a6da6f56f53d02f8b88a4
 
 </script>
 
