@@ -3,10 +3,19 @@
 {% block content %}
 
 <div class="box-title">
-        <h1 id="question-title">{{ poll.name }}</h1>
-        {% if poll.submitter %}
-        <p>Asked by {{ poll.submitter }}
-        {% endif %}
+    <div class="ui middle aligned stackable grid">
+        <div class="one wide column"></div>
+        <div class="ten wide column">    
+            <h1 id="question-title">{{ poll.name }}</h1>
+            {% if poll.submitter %}
+            <p>Asked by {{ poll.submitter }}
+            {% endif %}
+        </div>
+        <div class="one wide column"></div>
+        <div class="four wide column">
+            <div class="ui orange button"><i class="add icon"></i> Add an Idea </div>
+        </div>
+    </div>
 </div>
 
 <div class="three column stackable ui grid" id="cards">
@@ -19,21 +28,34 @@
     <i class="circular bolt icon"></i>
 </div>
 
-<div class="container">
-    <div class="ui segment">
-        <form id="new_option_form" action="{% url 'create_option' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="poll_id" value="{{ poll.id }}">
-            <div class="ui fluid input">
-                <input id="option_input" type="text" name="text" placeholder="Add a new option">
-            </div>
-            <div class="ui action input" style="margin-top:20px">
-                <input id="username_input" type="text" name="submitter" placeholder="Your name">
-                <div id="add_btn" class="ui teal disabled button"><i class="user icon"></i> Add Option</div>
-            </div>
-        </form>
+<!-- <center>
+<div class="ui button" id="add_idea_button"> Yeah </div>
+</center> -->
+
+<!-- <div class="ui bottom sidebar" id="add_idea"> -->
+    <div class="box">
+        <center>
+            <form id="new_option_form" action="{% url 'create_option' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="poll_id" value="{{ poll.id }}">
+                <h1 class="use-oswald"> Add your idea to the storm. </h1>
+                <div class="ui grid">
+                    <div class="four wide column"> </div>
+                    <div class="eight wide column">
+                        <div class="ui fluid input">
+                            <input id="option_input" type="text" name="text" placeholder="Write some text or a link here.">
+                        </div>
+                    </div>
+                    <div class="four wide column"> </div>
+                </div>
+                <div class="ui action input" style="margin-top:20px">
+                    <input id="username_input" type="text" name="submitter" placeholder="Your name">
+                    <div id="add_btn" class="ui orange disabled button"><i class="user icon"></i> Submit Idea</div>
+                </div>
+            </form>
+        </center>
     </div>
-</div>
+<!-- </div> -->
 
 {% csrf_token %}
 
@@ -115,6 +137,11 @@
     setInterval(redraw, 1000);
     $("#option_input").keyup(calculate_btn);
     $("#username_input").keyup(calculate_btn);
+
+    $("#add_idea_button").click(function(){
+        $('.sidebar').filter('.bottom').sidebar('toggle');
+        })
+    ;
 
 </script>
 

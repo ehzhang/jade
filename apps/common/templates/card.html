@@ -1,24 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="ui grid container" style="margin-top: 20px">
-    <div class="two wide column">&nbsp;</div>
-    <div class="two wide column">
-        <div class="ui icon header">
-            <i class="circular question icon"></i>
-        </div>
-    </div>
-    <div class="ten wide column">
-        <h1><a href="{% url 'poll_atomic' poll.id %}">{{ poll.name }}</a></h1>
-    </div>
+<div class="box-title">
+	<div class="ui middle aligned grid container" style="margin-top: 20px">
+	    <div class="two wide column">
+	        <div class="ui icon header">
+	            <a href="{% url 'poll_atomic' poll.id %}"><i class="circular angle left icon"></i></a>
+	        </div>
+	    </div>
+	    <div class="fourteen wide column use-oswald" style="font-size: 12pt; font-family: 'Oswald'; font-weight: 300">
+	        <h1><a href="{% url 'poll_atomic' poll.id %}">{{ poll.name }}</a></h1>
+	    </div>
+	</div>
 </div>
 
-<div class="container">
-    <div class="ui piled segment">
+<div class="box-title">
         <div class="ui grid">
             <div class="two wide column">
-                votes
+                <!-- votes -->
             </div>
             <div class="fourteen wide column">
                 <h1>{{ card.text }}</h1>
@@ -27,10 +26,9 @@
                 {% endif %}
             </div>
         </div>
-    </div>
 </div>
 
-<div class="container" id="comments">
+<div id="comments">
     {% for comment in card.comments %}
         {% include 'comment.html' %}
     {% endfor %}
@@ -40,7 +38,7 @@
     <form id="comment" action="{% url 'create_comment' %}"
         method="post">
         {% csrf_token %}
-        <div class="ui fluid icon input">
+        <div class="ui large fluid icon input">
             <input type="text" name="text" placeholder="Add a new comment" id="comment_text">
             <i class="teal pencil icon"></i>
         </div>
@@ -64,7 +62,7 @@
 
     $('#comment_text').keyup(function(event){
         if (event.which == 13){
-            reply();
+            return reply();
         }
     });
 
@@ -84,6 +82,7 @@
         );
         return false;
     });
+    setInterval(redraw, 1000);
 
 </script>
 

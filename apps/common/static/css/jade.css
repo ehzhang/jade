@@ -53,6 +53,7 @@ body {
 .banner,
 .box,
 .box-title,
+.box-comments,
 .box-white,
 .box-orange,
 .box-grey {
@@ -71,6 +72,10 @@ body {
 
 .box-title {
 	margin-bottom: 16px;
+}
+
+.box-comments {
+	padding: 16px;
 }
 
 .navbar {
@@ -101,4 +106,10 @@ a {
     margin-left: auto;
     margin-right: auto;
     width: 32px;
+}
+
+#add_idea {
+	position: fixed;
+	bottom: 0;
+
 }
