@@ -1,3 +1,5 @@
 ENV/
 *.pyc
 .DS_Store
+database.db
+
