@@ -9,7 +9,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Jin Pan', 'jinxp1@gmail.com'),
 )
 
 TEMPLATE_DIRS = (
@@ -36,7 +36,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.jin-pan.com', 'tempest.jin-pan.com', ]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -133,7 +133,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # Third party modules
-    'djcelery',
     'south',
     'suit',
 
@@ -165,7 +164,11 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'logfile': {
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': '/var/log/django/error.log'
+        },
     },
     'loggers': {
         'django.request': {
@@ -173,6 +176,10 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        '': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+        }
     }
 }
 
@@ -204,8 +211,4 @@ except AttributeError:
 else:
     update_settings(globals())
 
-# dj celery related
-import djcelery
-djcelery.setup_loader()
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
