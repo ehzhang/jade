@@ -7,6 +7,7 @@ class Card(object):
     text = None
     submitter = None
     votes = None
+    comments = None
 
     def __init__(self, option_id):
         self.option_id = option_id

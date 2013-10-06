@@ -23,7 +23,7 @@ body {
 .logo-description {
 	color: #E5A900;
 	font-weight: 400;
-	font-size: 22vw;
+	font-size: 18vw;
 	text-shadow: 0px 0px 1px #BABABA;
 }
 
@@ -33,13 +33,21 @@ body {
 	margin-bottom: 20px;
 }
 
-.box {
-	margin: 16px 16px 0px 16px;
+.banner,
+.box,
+.box-white,
+.box-orange,
+.box-grey {
+	margin: 0px 16px 0px 16px;
+	padding: 25px;
 	background: white;
 	border: 1px #262626;
-	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.065);
-	padding-bottom: 50px;
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+	padding-bottom: 30px;
+}
 
+.banner {
+	margin-top: 16px;
 }
 
 .navbar {
