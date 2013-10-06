@@ -2,9 +2,6 @@
     <div class="ui segment">
         <div class="ui divided grid">
             <div class="fourteen wide column">
-                <div class="row">
-                    {{ card.votes }} votes
-                </div>
                 <div class='name'>
                     <h2>
                         <a href="{% url 'card_atomic' card.option_id %}">
@@ -27,8 +24,8 @@
                 </div>
                 <div class="ui attached segment">
                     <h3 class="ui center aligned header">
-                        3
-                    </h2>
+                        {{ card.votes }}
+                    </h3>
                 </div>
                 <div class="ui bottom attached basic button">
                     <i class="red down medium arrow icon"></i>
