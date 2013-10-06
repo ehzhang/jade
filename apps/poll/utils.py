@@ -8,8 +8,9 @@ class Card(object):
     submitter = None
     votes = None
     comments = None
+    user_vote = None
 
-    def __init__(self, option_id):
+    def __init__(self, option_id, request = None):
         self.option_id = option_id
         option = Option.objects.get(id=option_id)
 
@@ -20,6 +21,12 @@ class Card(object):
             DisplayComment(comment) for comment in
             Comment.objects.filter(option=option)
         ]
+
+        if request and 'option_votes' in request.session and \
+            unicode(option_id) in request.session['option_votes']:
+            self.user_vote = request.session['option_votes'][unicode(option_id)]
+        else:
+            self.user_vote = 0
 
 
 class DisplayComment(object):

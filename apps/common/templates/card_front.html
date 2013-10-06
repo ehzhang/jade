@@ -21,7 +21,11 @@
             <div class="four wide column">
                 <div class="ui top attached segment">
                     <a href="javascript:void(0)" onclick="upvote({{ card.option_id }})">
+                        {% if card.user_vote == 1 %}
                         <i class="green up large arrow icon up-down-vote"></i>
+                        {% else %}
+                        <i class="black up large arrow icon up-down-vote"></i>
+                        {% endif %}
                     </a>
                 </div>
                 <div class="ui attached segment">
@@ -31,7 +35,11 @@
                 </div>
                 <div class="ui bottom attached segment">
                     <a href="javascript:void(0)" onclick="downvote({{ card.option_id }})">
+                        {% if card.user_vote == -1 %}
                         <i class="red down large arrow icon up-down-vote"></i>
+                        {% else %}
+                        <i class="black down large arrow icon up-down-vote"></i>
+                        {% endif %}
                     </a>
                 </div>
                 <br/>
