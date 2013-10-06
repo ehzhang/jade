@@ -114,10 +114,10 @@
         return false;
     }
 
+    setInterval(redraw, 1000);
     $("#option_input").keyup(calculate_btn);
     $("#username_input").keyup(calculate_btn);
 
-    setInterval(redraw, 1000);
 </script>
 
 {% endblock %}
