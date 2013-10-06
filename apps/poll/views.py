@@ -81,7 +81,7 @@ def poll_redraw(request):
     poll_id = request.GET.get('poll_id')
     poll = Poll.objects.get(id=poll_id)
 
-    cards = [Card(option.id, request) for option in Option.objects.filter(poll=poll)]
+    cards = [Card(option.id, request) for option in Option.objects.filter(poll=poll).order_by('-upvotes', 'id')]
     data = {
         'card_html': '',
     }
@@ -199,7 +199,7 @@ def option_redraw(request):
     option_id = request.GET.get('option_id')
     option = Option.objects.get(id=option_id)
 
-    comments = Comment.objects.filter(option=option)
+    comments = Comment.objects.filter(option=option).order_by('timestamp')
     data = {
         'comment_html': '',
     }
