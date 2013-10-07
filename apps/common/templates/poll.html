@@ -44,8 +44,8 @@
                 <div class="ui grid">
                     <div class="four wide column"> </div>
                     <div class="eight wide column">
-                        <div class="ui fluid input">
-                            <input id="option_input" type="text" name="text" placeholder="Write some text or a link here.">
+                        <div class="ui form">
+                            <textarea id="option_input" type="text" name="text"></textarea>
                         </div>
                     </div>
                     <div class="four wide column"> </div>
@@ -63,6 +63,7 @@
 
 <script type="text/javascript">
 
+    // Scroll down to the bottom of the page when 'Add Idea' is clicked.
     $("a[href='#option_input']").click(function() {
         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
         return false;
@@ -142,6 +143,7 @@
     }
 
     setInterval(redraw, 1000);
+
     $("#option_input").keyup(calculate_btn);
     $("#username_input").keyup(calculate_btn);
 
