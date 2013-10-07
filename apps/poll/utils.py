@@ -16,7 +16,7 @@ class Card(object):
 
         self.text = option.text
         self.submitter = option.submitter
-        self.votes = option.votes()
+        self.votes = option.votes
         self.comments = [
             DisplayComment(comment) for comment in
             Comment.objects.filter(option=option)
