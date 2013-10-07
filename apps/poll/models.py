@@ -75,12 +75,12 @@ class Option(models.Model):
 
     def downvote(self):
         self.downvotes += 1
-        self.downvotes += 1
+        self.votes -= 1
         self.save()
 
     def undo_downvote(self):
         self.downvotes -= 1
-        self.downvotes -= 1
+        self.votes += 1
         self.save()
 
 
