@@ -76,7 +76,6 @@
               },
               function(response){
                   if (response.result == 'success'){
-                      $('.create.modal').modal('show');
                       $('#poll_url')[0].setAttribute('href', response.url);
                       $('#poll_url')[0].innerHTML = response.fullurl;
                       $('.create.modal').modal('show');
@@ -94,7 +93,7 @@
     }
     return false;
   });
-  
+
 </script>
 
 
