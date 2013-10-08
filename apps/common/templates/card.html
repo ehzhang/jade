@@ -2,147 +2,147 @@
 
 {% block content %}
 <div class="box-title">
-	<div class="ui middle aligned grid container" style="margin-top: 20px">
-	    <div class="two wide column">
-	        <div class="ui icon header">
-	            <a href="{% url 'poll_atomic' poll.id %}"><i class="circular angle left icon"></i></a>
-	        </div>
-	    </div>
-	    <div class="fourteen wide column use-oswald" style="font-size: 12pt; font-family: 'Oswald'; font-weight: 300">
-	        <h1><a href="{% url 'poll_atomic' poll.id %}">{{ poll.name }}</a></h1>
-	    </div>
-	</div>
+  <div class="ui middle aligned grid container" style="margin-top: 20px">
+    <div class="two wide column">
+      <div class="ui icon header">
+        <a href="{% url 'poll_atomic' poll.id %}"><i class="circular angle left icon"></i></a>
+      </div>
+    </div>
+    <div class="fourteen wide column use-oswald" style="font-size: 12pt; font-family: 'Oswald'; font-weight: 300">
+      <h1><a href="{% url 'poll_atomic' poll.id %}">{{ poll.name }}</a></h1>
+    </div>
+  </div>
 </div>
 
 <div class="box-title">
-        <div class="ui grid">
-            <div class="two wide column">
-                <div class="four wide column" id="votes">
-                <div class="ui top attached segment" >
-                    <a href="javascript:void(0)" onclick="upvote({{ card.option_id }})" style="position:relative; left:-15px;">
-                        {% if card.user_vote == 1 %}
-                        <i class="green up arrow icon up-down-vote" ></i>
-                        {% else %}
-                        <i class="black up arrow icon up-down-vote" ></i>
-                        {% endif %}
-                    </a>
-                </div>
-                <div class="ui attached segment">
-                    <h3 class="ui center aligned header" style="position:relative; left:-5px;">
-                        {{ card.votes }}
-                    </h3>
-                </div>
-                <div class="ui bottom attached segment">
-                    <a href="javascript:void(0)" onclick="downvote({{ card.option_id }})" style="position:relative; left:-15px;">
-                        {% if card.user_vote == -1 %}
-                        <i class="red down arrow icon up-down-vote"></i>
-                        {% else %}
-                        <i class="black down arrow icon up-down-vote"></i>
-                        {% endif %}
-                    </a>
-                </div>
-                <!-- votes -->
-            </div>
-            </div>
-            <!--  -->
-            <div class="fourteen wide column">
-                <h1>{{ card.text }}</h1>
-                {% if card.submitter %}
-                    <p align="right">Posted by {{ card.submitter }}
-                {% endif %}
-            </div>
+    <div class="ui grid middle aligned">
+      <div class="two wide column">
+        <div class="four wide column" id="votes">
+        <div class="ui top attached segment" >
+          <a href="javascript:void(0)" onclick="upvote({{ card.option_id }})" style="position:relative; left:-15px;">
+            {% if card.user_vote == 1 %}
+            <i class="green up arrow icon up-down-vote" ></i>
+            {% else %}
+            <i class="black up arrow icon up-down-vote" ></i>
+            {% endif %}
+          </a>
         </div>
+        <div class="ui attached segment">
+          <h3 class="ui center aligned header" style="position:relative; left:-5px;">
+            {{ card.votes }}
+          </h3>
+        </div>
+        <div class="ui bottom attached segment">
+          <a href="javascript:void(0)" onclick="downvote({{ card.option_id }})" style="position:relative; left:-15px;">
+            {% if card.user_vote == -1 %}
+            <i class="red down arrow icon up-down-vote"></i>
+            {% else %}
+            <i class="black down arrow icon up-down-vote"></i>
+            {% endif %}
+          </a>
+        </div>
+        <!-- votes -->
+      </div>
+      </div>
+      <!--  -->
+      <div class="fourteen wide column">
+        <h1>{{ card.text }}</h1>
+        {% if card.submitter %}
+          <p align="right">Posted by {{ card.submitter }}
+        {% endif %}
+      </div>
+    </div>
 </div>
 
 <div id="comments">
-    {% for comment in card.comments %}
-        {% include 'comment.html' %}
-    {% endfor %}
+  {% for comment in card.comments %}
+    {% include 'comment.html' %}
+  {% endfor %}
 </div>
 
 <div class="container">
-    <form id="comment" action="{% url 'create_comment' %}"
-        method="post">
-        {% csrf_token %}
-        <div class="ui large fluid icon input">
-            <input type="text" name="text" placeholder="Add a new comment" id="comment_text">
-            <i class="teal pencil icon"></i>
-        </div>
-        <input type="hidden" name="option_id" value="{{ card.option_id }}">
-    </form>
+  <form id="comment" action="{% url 'create_comment' %}"
+    method="post">
+    {% csrf_token %}
+    <div class="ui large fluid icon input">
+      <input type="text" name="text" placeholder="Add a new comment" id="comment_text">
+      <i class="comment icon" style="color:orange"></i>
+    </div>
+    <input type="hidden" name="option_id" value="{{ card.option_id }}">
+  </form>
 </div>
 
 <script type="text/javascript">
-    function redraw(){
-        $.get(
-            "{% url 'option_redraw' %}",
-            {'option_id': {{ card.option_id }}},
-            function(result){
-                $('#comments')[0].innerHTML = result['comment_html'];
-            }
-        );
-    }
+  function redraw(){
+    $.get(
+      "{% url 'option_redraw' %}",
+      {'option_id': {{ card.option_id }}},
+      function(result){
+        $('#comments')[0].innerHTML = result['comment_html'];
+      }
+    );
+  }
 
-    function reply(){
-        $('#comment').submit();
-    }
+  function reply(){
+    $('#comment').submit();
+  }
 
-    $('#comment_text').keyup(function(event){
-        if (event.which == 13){
-	        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-            return reply();
+  $('#comment_text').keyup(function(event){
+    if (event.which == 13){
+      $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+      return reply();
+    }
+  });
+
+  $('#comment').submit(function(){
+    if ($("#comment_text")[0].value == ''){
+      return false;
+    }
+    $.post(
+      $(this).attr('action'),
+      $(this).serialize(),
+      function(response){
+        if (response['result'] == 'success'){
+          $('#comment_text')[0].value = '';
         }
-    });
+        redraw();
+      });
+    return false;
+  });
 
-    $('#comment').submit(function(){
-        if ($("#comment_text")[0].value == ''){
-            return false;
+  function upvote(option_id){
+    $.post(
+      '{% url "option_upvote" %}',
+      {
+        option_id: option_id,
+        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+      },
+      function(response){
+        if (response.result == 'success'){
+          redraw();
         }
-        $.post(
-            $(this).attr('action'),
-            $(this).serialize(),
-            function(response){
-                if (response['result'] == 'success'){
-                    $('#comment_text')[0].value = '';
-                }
-                redraw();
-            });
-        return false;
-    });
+      }
+    );
+    return false;
+  }
 
-    function upvote(option_id){
-        $.post(
-            '{% url "option_upvote" %}',
-            {
-                option_id: option_id,
-                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
-            },
-            function(response){
-                if (response.result == 'success'){
-                    redraw();
-                }
-            }
-        );
-        return false;
-    }
+  function downvote(option_id){
+    $.post(
+      '{% url "option_downvote" %}',
+      {
+        option_id: option_id,
+        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+      },
+      function(response){
+        if (response.result == 'success'){
+          redraw();
+        }
+      }
+    );
+    return false;
+  }
 
-    function downvote(option_id){
-        $.post(
-            '{% url "option_downvote" %}',
-            {
-                option_id: option_id,
-                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
-            },
-            function(response){
-                if (response.result == 'success'){
-                    redraw();
-                }
-            }
-        );
-        return false;
-    }
-
-    setInterval(redraw, 1000);
+  setInterval(redraw, 1000);
 
 </script>
 
