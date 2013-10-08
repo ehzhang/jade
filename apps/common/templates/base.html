@@ -16,6 +16,8 @@
 
     <script src="{% static "js/semantic.min.js" %}"></script>
 
+    <script src="{% static "js/jade.js" %}"></script>
+
     <link href="{% static 'css/jade.css' %}" rel="stylesheet" type="text/css">
 
     {% endblock %}
@@ -40,6 +42,60 @@
             <a class="item">Logout</a>
           </div>
         </div> -->
+      </div>
+    </div>
+
+    <div class="ui modal" id="share_modal">
+      <i class="close icon"></i>
+      <div class="header">
+        <center> A storm is brewing...
+        </center>
+      </div>
+      <div class="content">
+        <div class="ui grid center aligned">
+          <div class="row">
+            <div class="column"> 
+              Copy and share this link:
+            </div>
+          </div>
+          <div class="row">
+            <center>
+              <div class="ui input">
+                <input type="text" id="poll_url">
+              </div>
+            </center>
+          </div>
+          <div class="ui horizontal divider">
+            Or
+          </div>
+          <div class="row">
+            <a href="" id="poll_go">
+              <div class="ui green button"><i class="circle arrow right icon"></i> GO NOW </div>
+            </a>
+          </div>
+          <div class="row">
+            <a href="#" 
+              onclick="
+                window.open(
+                  'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 
+                  'facebook-share-dialog', 
+                  'width=626,height=436'); 
+                return false;" id="facebook_share">
+              <div class="ui facebook button"><i class="facebook icon"></i> SHARE ON FACEBOOK </div>
+            </a>
+          </div>
+    <!--       <div class="row">
+            <div class="ui twitter button"><i class="twitter icon"></i> SHARE ON TWITTER </div>
+            </a>
+          </div> -->
+          <div class="row">
+            <div class="ui orange button" id="email_button"><i class="mail icon"></i> SHARE WITH EMAIL </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui button">Cancel</div>
+        <div class="ui button">OK</div>
       </div>
     </div>
 
