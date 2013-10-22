@@ -90,6 +90,19 @@ def poll_redraw(request):
     return JSONResponse(data)
 
 
+def poll_redraw_json(request):
+    poll_id = request.GET.get('poll_id')
+    poll = Poll.objects.get(id=poll_id)
+
+    cards = [Card(option.id, request).to_json() for option in
+             Option.objects.filter(poll=poll).order_by('-votes', 'id')]
+    data = {
+        'cards': cards,
+    }
+
+    return JSONResponse(data)
+
+
 def create_option(request):
     poll_id = get_post_request_attr(request, 'poll_id')
     submitter = get_post_request_attr(request, 'submitter')
@@ -206,6 +219,26 @@ def option_redraw(request):
         data['comment_html'] += create_html(comment)
 
     return JSONResponse(data)
+
+
+def option_redraw_json(request):
+    def to_json(comment):
+        data = {
+            'submitter': comment.submitter,
+            'text': comment.text,
+        }
+        return data
+    option_id = request.GET.get('option_id')
+    option = Option.objects.get(id=option_id)
+
+    comments = Comment.objects.filter(option=option).order_by('timestamp')
+    data = {
+        'comments': [to_json(comment) for comment in comments],
+    }
+
+    return JSONResponse(data)
+
+
 
 
 def comment_upvote(request):

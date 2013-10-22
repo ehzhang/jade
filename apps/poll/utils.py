@@ -28,6 +28,19 @@ class Card(object):
         else:
             self.user_vote = 0
 
+    def to_json(self):
+        data = {
+            'option_id': self.option_id,
+            'submitter': self.submitter,
+            'text': self.text,
+            'user_vote': self.user_vote,
+            'votes': self.votes,
+            'comments': self.comments,
+        }
+        return data
+
+
+
 
 class DisplayComment(object):
     comment_id = None
