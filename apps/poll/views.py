@@ -34,8 +34,7 @@ def transform_poll_id(poll_hash):
 def poll_atomic(request, poll_id):
     
     poll = Poll.objects.get(id=transform_poll_id(poll_id))
-    cards = [Card(option.id) for option in 
-             Option.objects.filter(poll=poll)]
+    cards = [Card(option.id, request) for option in Option.objects.filter(poll=poll).order_by('-votes', 'id')]
     context = {
         'poll': poll,
         'cards': cards,
