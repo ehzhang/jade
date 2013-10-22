@@ -1,6 +1,6 @@
 <div class="box-comments">
-    <p>{{ comment.text }}</p>
-    {% if comment.submitter %}
-        <p align="right"> -- {{ comment.submitter }}</p>
-    {% endif %}
+  {{ comment.text }}
+  {% if comment.submitter %}
+    <div align="right"> -- {{ comment.submitter }}</div>
+  {% endif %}
 </div>

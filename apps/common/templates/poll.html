@@ -3,152 +3,172 @@
 {% block content %}
 
 <div class="box-title">
-    <div class="ui middle aligned stackable grid">
-        <div class="one wide column"></div>
-        <div class="ten wide column">    
-            <h1 id="question-title">{{ poll.name }}</h1>
-            {% if poll.submitter %}
-            <p>Asked by {{ poll.submitter }}
-            {% endif %}
-        </div>
-        <div class="one wide column"></div>
-        <div class="four wide column">
-            <a href="#option_input">
-                <div class="ui orange button"><i class="add icon"></i> Add an Idea </div>
-            </a>
-        </div>
+  <div class="ui middle aligned stackable grid">
+    <div class="one wide column"></div>
+    <div class="ten wide column">    
+      <div id="question-title">{{ poll.name }}</div>
+      {% if poll.submitter %}
+      <p>Asked by {{ poll.submitter }}
+      {% endif %}
     </div>
+    <div class="one wide column"></div>
+    <div class="four wide column">
+      <a href="#option_input">
+        <div class="ui orange button"><i class="add icon"></i> Add an Idea </div>
+      </a>
+
+      <div class="ui blue icon button" id="share_button" data-content="Share this Storm">
+        <i class="share icon"></i>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="three column stackable ui grid" id="cards">
-    {% for card in cards %}
-    {% include 'card_front.html' %}
-    {% endfor %}
+  {% for card in cards %}
+  {% include 'card_front.html' %}
+  {% endfor %}
 </div>
 
 <div class="ui horizontal icon divider">
-    <i class="circular bolt icon"></i>
+  <i class="circular bolt icon"></i>
 </div>
-
-<!-- <center>
-<div class="ui button" id="add_idea_button"> Yeah </div>
-</center> -->
-
-<!-- <div class="ui bottom sidebar" id="add_idea"> -->
-    <div class="box">
-        <center>
-            <form id="new_option_form" action="{% url 'create_option' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="poll_id" value="{{ poll.id }}">
-                <h1 class="use-oswald"> Add your idea to the storm. </h1>
-                <div class="ui grid">
-                    <div class="four wide column"> </div>
-                    <div class="eight wide column">
-                        <div class="ui fluid input">
-                            <input id="option_input" type="text" name="text" placeholder="Write some text or a link here.">
-                        </div>
-                    </div>
-                    <div class="four wide column"> </div>
-                </div>
-                <div class="ui action input" style="margin-top:20px">
-                    <input id="username_input" type="text" name="submitter" placeholder="Your name">
-                    <div id="add_btn" class="ui orange disabled button"><i class="user icon"></i> Submit Idea</div>
-                </div>
-            </form>
-        </center>
-    </div>
+  <div class="box">
+    <center>
+      <form id="new_option_form" action="{% url 'create_option' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="poll_id" value="{{ poll.id }}">
+        <h1 class="use-oswald"> Add your idea to the storm. </h1>
+        <div class="ui grid">
+          <div class="four wide column"> </div>
+          <div class="eight wide column">
+            <div class="ui form">
+              <textarea id="option_input" type="text" name="text" placeholder="Start typing your idea here..."></textarea>
+              <div class="ui fluid input" style="margin-top:20px">
+                <input id="username_input" type="text" name="submitter" placeholder="Your name">
+                <center>
+                  <div id="add_btn" class="ui orange disabled large button" style="margin-top: 20px">
+                    <i class="add icon"></i> Submit Idea
+                  </div>
+                </center>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </center>
+  </div>
 <!-- </div> -->
 
 {% csrf_token %}
 
 <script type="text/javascript">
+  
+  var mailto_link = "mailto:?Subject=Help me brainstorm on Tempest%21&body=Follow this link: " + encodeURIComponent(location.href);
 
-    $("a[href='#option_input']").click(function() {
-        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-        return false;
-    });
+  $('#email_button').click(function() {window.location = mailto_link;});
 
-    $("#new_option_form").submit(function(){
-        $.post(
-            $(this).attr('action'),
-            $(this).serialize(),
-            function(response){
-                if (response.result == 'success'){
-                    redraw();
-                }
-            }
-        );
-        return false;
-    });
+  $('#share_button').popup('setting', 'transition', 'fade up');
 
-    $("#add_btn").click(function(){
-        if (!$(this).hasClass('disabled')){
-            $("#new_option_form").submit();
+  $('#share_button').click(show_share_modal);
+
+  $('#poll_url').focus(function() {$(this).select()}).mouseup(function (e) {e.preventDefault(); });
+
+  function show_share_modal(){
+    $('#poll_url').val(location.href);
+    $('#share_modal').modal('show');
+  }
+  
+
+  // Scroll down to the bottom of the page when 'Add Idea' is clicked.
+  $("a[href='#option_input']").click(function() {
+    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+    return false;
+  });
+
+  $("#new_option_form").submit(function(){
+    $.post(
+      $(this).attr('action'),
+      $(this).serialize(),
+      function(response){
+        if (response.result == 'success'){
+          redraw();
         }
-    });
+      }
+    );
+    $('#option_input').val('');
+    return false;
+  });
 
-    function calculate_btn(){
-        if ($('#option_input')[0].value != '' && $('#username_input')[0].value != ''){
-            $('#add_btn').removeClass('disabled');
+  $("#add_btn").click(function(){
+    if (!$(this).hasClass('disabled')){
+      $("#new_option_form").submit();
+    }
+  });
+
+  function calculate_btn(){
+    if ($('#option_input')[0].value != '' && $('#username_input')[0].value != ''){
+      $('#add_btn').removeClass('disabled');
+    }
+    else{
+      $('#add_btn').addClass('disabled');
+    }
+  }
+
+  function redraw(){
+    $.get(
+      '{% url "poll_redraw" %}',
+      {
+        poll_id: {{ poll.id }},
+        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+      },
+      function(response){
+        $('#cards')[0].innerHTML = response.card_html;
+      }
+    );
+  }
+
+  function upvote(option_id){
+    $.post(
+      '{% url "option_upvote" %}',
+      {
+        option_id: option_id,
+        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+      },
+      function(response){
+        if (response.result == 'success'){
+          redraw();
         }
-        else{
-            $('#add_btn').addClass('disabled');
+      }
+    );
+    return false;
+  }
+
+  function downvote(option_id){
+    $.post(
+      '{% url "option_downvote" %}',
+      {
+        option_id: option_id,
+        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
+      },
+      function(response){
+        if (response.result == 'success'){
+          redraw();
         }
-    }
+      }
+    );
+    return false;
+  }
 
-    function redraw(){
-        $.get(
-            '{% url "poll_redraw" %}',
-            {
-                poll_id: {{ poll.id }},
-                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
-            },
-            function(response){
-                $('#cards')[0].innerHTML = response.card_html;
-            }
-        );
-    }
+  setInterval(redraw, 1000);
 
-    function upvote(option_id){
-        $.post(
-            '{% url "option_upvote" %}',
-            {
-                option_id: option_id,
-                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
-            },
-            function(response){
-                if (response.result == 'success'){
-                    redraw();
-                }
-            }
-        );
-        return false;
-    }
+  $("#option_input").keyup(calculate_btn);
+  $("#username_input").keyup(calculate_btn);
 
-    function downvote(option_id){
-        $.post(
-            '{% url "option_downvote" %}',
-            {
-                option_id: option_id,
-                csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]')[0].value
-            },
-            function(response){
-                if (response.result == 'success'){
-                    redraw();
-                }
-            }
-        );
-        return false;
-    }
-
-    setInterval(redraw, 1000);
-    $("#option_input").keyup(calculate_btn);
-    $("#username_input").keyup(calculate_btn);
-
-    $("#add_idea_button").click(function(){
-        $('.sidebar').filter('.bottom').sidebar('toggle');
-        })
-    ;
+  $("#add_idea_button").click(function(){
+    $('.sidebar').filter('.bottom').sidebar('toggle');
+    })
+  ;
 
 </script>
 
